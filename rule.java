@@ -38,7 +38,7 @@ public class rule extends JFrame{
 //      add(jbutton);
       
       try {
-         picture = ImageIO.read(new File("Image/howtoplay.jpg")); 
+         picture = ImageIO.read(new File("Image/start.jpg")); 
       } catch (IOException e) {
          e.printStackTrace();
       }
