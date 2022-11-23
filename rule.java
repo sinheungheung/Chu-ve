@@ -1,5 +1,4 @@
 package mypart;
-
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Toolkit;
@@ -29,14 +28,13 @@ public class rule extends JFrame{
    // 생성자는 new를 통해 class를 instance화 시킬 때 호출되는 함수
    JLabel img = new JLabel();
    BufferedImage picture;
-   
-   // 근데 문제가 있다 JButton btn1 = new JButton("");이거를 쓰니까
-   // 배경이 안떠 문제가 많다 많아 
+
    public rule(){
 	   
 	   super("게임방법"); // 타이틀
 	   JPanel jPanel = new JPanel();
 	  JButton btn1 = new JButton("."); // 투명 버튼
+	  setSize(50,100);
 	 // JButton btn2 = new JButton(""); // 닉네임 입력창 <- 여기다 넣어줘야해
 	 
 	  jPanel.add(btn1);
@@ -104,7 +102,7 @@ public class Part1 extends JFrame{
 	   }
 	   Dimension frameSize = getSize();
 	   Dimension windowSize = Toolkit.getDefaultToolkit().getScreenSize();
-//       setLocation((windowSize.width - frameSize.width) / 2,
+//      setLocation((windowSize.width - frameSize.width) / 2,
 //               (windowSize.height - frameSize.height) / 2); //화면 중앙에 띄우기
 //       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 //       setVisible(true);
