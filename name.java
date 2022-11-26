@@ -32,6 +32,7 @@ public class name extends JFrame{
 		    	 setSize(1200,900);
 		    	 setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		    	 setLayout(null);
+		    	 setLocationRelativeTo(null);
 		    	 
 		    	 // 이미지 빌려오기
 		    	 try {
