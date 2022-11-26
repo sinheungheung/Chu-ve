@@ -1,26 +1,31 @@
 package mypart;
 
 import java.awt.Graphics;
+import java.awt.TextField;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import javafx.scene.layout.Border;
+
 public class name extends JFrame{
 			  BufferedImage img = null;
 			  JTextField logintTextField;
 			  JButton bt;
+			  
 		     public static void main(String[] args) {
 		    	 new name();
 		    	 
 		     }
-		     
+		   
 		     public name() {
 		    	 setTitle("닉네입 입력");
 		    	 setSize(1200,900);
@@ -46,16 +51,25 @@ public class name extends JFrame{
 		    	 logintTextField.setBounds(162,450,901,100); 
 		    	 layeredPane.add(logintTextField);
 		    	 
+		    	 
 		    	 // 로그인버튼 추가
-//		    	 bt = new JButton(new ImageIcon("BtnImage/뭐시기 일단"));
-//		    	 bt.setBounds(755,689,104,48);
-//		    	 layeredPane.add(bt);
+		    	 bt = new JButton(new ImageIcon("BtnImage/CheckBtn.png"));
+		    	 bt.setBounds(970,700,200,150);
+		    	 
+		    	//  bt.setBorderPainted(false);
+		    	 bt.setContentAreaFilled(false);
+		    	 bt.setFocusPainted(false);
+		    	 
+
+		    	 
+		    	 layeredPane.add(bt);
 		    	 
 		    	 layeredPane.add(panel);
 		    	 
 		    	 add(layeredPane);
 		    	 setVisible(true);
 		     }
+		     
 		     class MyPanel extends JPanel{
 		    	 public void paint(Graphics g) {
 		    		 g.drawImage(img,  0, 0, null);
