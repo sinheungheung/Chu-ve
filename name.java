@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import javafx.scene.layout.Border;
 
@@ -34,7 +35,7 @@ public class name extends JFrame{
 		    	 
 		    	 // 이미지 빌려오기
 		    	 try {
-		    		 img = ImageIO.read(new File("Image/okay1.png"));
+		    		 img = ImageIO.read(new File("Image/name.png"));
 		    	 }catch(IOException e) {
 		    		 System.out.println("이미지 불러오기 실패");
 		    		 System.exit(0);
@@ -53,13 +54,14 @@ public class name extends JFrame{
 		    	 
 		    	 
 		    	 // 로그인버튼 추가
+		    	
 		    	 bt = new JButton(new ImageIcon("BtnImage/CheckBtn.png"));
 		    	 bt.setBounds(970,700,200,150);
 		    	 
-		    	//  bt.setBorderPainted(false);
+		    	
 		    	 bt.setContentAreaFilled(false);
 		    	 bt.setFocusPainted(false);
-		    	 
+		    	// bt.setBorderPainted(false);
 
 		    	 
 		    	 layeredPane.add(bt);
@@ -69,6 +71,7 @@ public class name extends JFrame{
 		    	 add(layeredPane);
 		    	 setVisible(true);
 		     }
+		     
 		     
 		     class MyPanel extends JPanel{
 		    	 public void paint(Graphics g) {
