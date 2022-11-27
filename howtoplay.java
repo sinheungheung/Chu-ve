@@ -44,14 +44,19 @@ import javax.swing.event.*;
 	    
 
 	    bt = new JButton(new ImageIcon("BtnImage/Btn_Play.png"));
-	    
-	    panel.add(bt);
-	    	 
+	    bt.setBounds(850,640,350,215); // ¿ÞÂÊ ¿·, À§, 
+	   
+	   
 	    bt.setContentAreaFilled(false);
    	    bt.setFocusPainted(false);
-   	    // bt.setBorderPainted(false);
+   	   // bt.setBorderPainted(false);
    	 
-	    	 setVisible(true);
+   	    panel.add(bt);
+   	    panel.add(panel);
+	 
+	    add(panel);
+   	    
+	    setVisible(true);
       
         
        }
