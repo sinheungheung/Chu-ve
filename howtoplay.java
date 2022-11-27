@@ -20,7 +20,7 @@ import javax.swing.event.*;
       JButton bt;
       
      Ex1(){
-           this.setTitle("이미지 그리기 연습");
+           this.setTitle("게임 규칙");
            this.setSize(1200,900);
            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
            this.setLocationRelativeTo(null);
@@ -38,7 +38,6 @@ import javax.swing.event.*;
            
 
            this.add(panel);
-           this.setSize(1200,900);
            this.setVisible(true);
          
 	    
