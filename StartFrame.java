@@ -1,4 +1,5 @@
-package main;
+package mypart;
+
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -21,14 +22,14 @@ import javax.swing.event.*;
 
 class Start extends JFrame {
 	
-	// Î≤ÑÌäº Ïù¥ÎØ∏ÏßÄ
+	// πˆ∆∞ ¿ÃπÃ¡ˆ
 	ImageIcon startBtnImage = new ImageIcon("src/image/pepper.png");
 	ImageIcon explainBtnImage = new ImageIcon("src/image/lettuce.png");
 	JButton startBtn = new JButton(startBtnImage);
 	JButton explainBtn = new JButton(explainBtnImage);
 	
 	Start() {
-		// Îí∑ Î∞∞Í≤Ω
+		// µﬁ πË∞Ê
 		JPanel panel = new JPanel() {
 			Image backgroundImage = new ImageIcon("src/image/startbackground.png").getImage();
 			@Override
@@ -37,7 +38,7 @@ class Start extends JFrame {
 				g.drawImage(backgroundImage, 0, 0, null);
 			}
 		};
-		setTitle("Í≥†Í∏∞ Ï∏ÑÎ≤†Î¶Ö");
+		setTitle("∞Ì±‚ √Ú∫£∏®");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		panel.setLayout(null);
@@ -60,7 +61,7 @@ class Start extends JFrame {
 		 
         Dimension windowSize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((windowSize.width - frameSize.width) / 2,
-                (windowSize.height - frameSize.height) / 2); //ÌôîÎ©¥ Ï§ëÏïôÏóê ÎùÑÏö∞Í∏∞
+                (windowSize.height - frameSize.height) / 2); //»≠∏È ¡ﬂæ”ø° ∂ÁøÏ±‚
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
         
@@ -68,7 +69,7 @@ class Start extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new Chu_verup();
+				new Chu_verup(getTitle());
 				setVisible(false);
 				
 			}
