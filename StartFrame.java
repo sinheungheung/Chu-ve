@@ -1,4 +1,4 @@
-package mypart;
+package main;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -21,23 +21,23 @@ import javax.swing.event.*;
 
 class Start extends JFrame {
 	
-	// πˆ∆∞ ¿ÃπÃ¡ˆ
-	ImageIcon startBtnImage = new ImageIcon("Image/pepper.png");
-	ImageIcon explainBtnImage = new ImageIcon("Image/lettuce.png");
+	// Î≤ÑÌäº Ïù¥ÎØ∏ÏßÄ
+	ImageIcon startBtnImage = new ImageIcon("src/image/pepper.png");
+	ImageIcon explainBtnImage = new ImageIcon("src/image/lettuce.png");
 	JButton startBtn = new JButton(startBtnImage);
 	JButton explainBtn = new JButton(explainBtnImage);
 	
 	Start() {
-		// µﬁ πË∞Ê
+		// Îí∑ Î∞∞Í≤Ω
 		JPanel panel = new JPanel() {
-			Image backgroundImage = new ImageIcon("Image/startbackground.png").getImage();
+			Image backgroundImage = new ImageIcon("src/image/startbackground.png").getImage();
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				g.drawImage(backgroundImage, 0, 0, null);
 			}
 		};
-		setTitle("∞Ì±‚ √Ú∫£∏®");
+		setTitle("Í≥†Í∏∞ Ï∏ÑÎ≤†Î¶Ö");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		panel.setLayout(null);
@@ -60,7 +60,7 @@ class Start extends JFrame {
 		 
         Dimension windowSize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((windowSize.width - frameSize.width) / 2,
-                (windowSize.height - frameSize.height) / 2); //»≠∏È ¡ﬂæ”ø° ∂ÁøÏ±‚
+                (windowSize.height - frameSize.height) / 2); //ÌôîÎ©¥ Ï§ëÏïôÏóê ÎùÑÏö∞Í∏∞
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
         
