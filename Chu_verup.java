@@ -1,4 +1,4 @@
-package mypart;
+package main;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,30 +18,30 @@ public class Chu_verup extends JFrame{
 	private Image bufferImage;
 	private Graphics screenGraphics;
 	
-	Image backgroundImage = new ImageIcon("Image/mainScreen.png").getImage();
-	private Image mouse = new ImageIcon("Image/mouse.png").getImage();
-	private Image meet = new ImageIcon("Image/meet.png").getImage();
+	Image backgroundImage = new ImageIcon("src/image/mainScreen.png").getImage();
+	private Image mouse = new ImageIcon("src/image/mouse.png").getImage();
+	private Image meet = new ImageIcon("src/image/meet.png").getImage();
 	
-	// ÇÃ·¹ÀÌ¾îÀÇ ÁÂÇ¥
+	// í”Œë ˆì´ì–´ì˜ ì¢Œí‘œ
 	private int mouseX, mouseY;
-	// ÇÃ·¹ÀÌ¾î¿Í ÄÚÀÎÀÇ Ãæµ¹ ¿©ºÎ ÆÇ´ÜÀ» À§ÇÑ °¢ ÀÌ¹ÌÁöÀÇ Å©±â
+	// í”Œë ˆì´ì–´ì™€ ì½”ì¸ì˜ ì¶©ëŒ ì—¬ë¶€ íŒë‹¨ì„ ìœ„í•œ ê° ì´ë¯¸ì§€ì˜ í¬ê¸°
 	private int mouseWidth = mouse.getWidth(null);
 	private int mouseHeight = mouse.getHeight(null);
 
-	// ÄÚÀÎ ÁÂÇ¥
+	// ì½”ì¸ ì¢Œí‘œ
 	private int meetX, meetY;
-	// ÇÃ·¹ÀÌ¾î¿Í ÄÚÀÎÀÇ Ãæµ¹ ¿©ºÎ ÆÇ´ÜÀ» À§ÇÑ °¢ ÀÌ¹ÌÁöÀÇ Å©±â
+	// í”Œë ˆì´ì–´ì™€ ì½”ì¸ì˜ ì¶©ëŒ ì—¬ë¶€ íŒë‹¨ì„ ìœ„í•œ ê° ì´ë¯¸ì§€ì˜ í¬ê¸°
 	private int meetWidth = meet.getWidth(null);
 	private int meetHeight = meet.getHeight(null);
 		
-	// Á¡¼ö
+	// ì ìˆ˜
 	private int score;
 	
-	// Å°º¸µåÀÇ ¿òÁ÷ÀÓÀ» ¹Ş´Â º¯¼ö
+	// í‚¤ë³´ë“œì˜ ì›€ì§ì„ì„ ë°›ëŠ” ë³€ìˆ˜
 	private boolean up, down, left, right;
 	
 	Chu_verup() {
-		setTitle("°ÔÀÓ È­¸é");
+		setTitle("ê²Œì„ í™”ë©´");
 		JPanel panel = new JPanel() {
 			@Override
 			protected void paintComponent(Graphics g) {
@@ -57,12 +57,12 @@ public class Chu_verup extends JFrame{
 		Dimension frameSize = getSize();
         Dimension windowSize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((windowSize.width - frameSize.width) / 2,
-                (windowSize.height - frameSize.height) / 2); //È­¸é Áß¾Ó¿¡ ¶ç¿ì±â
+                (windowSize.height - frameSize.height) / 2); //í™”ë©´ ì¤‘ì•™ì— ë„ìš°ê¸°
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 		
         addKeyListener(new KeyAdapter() {
-			// Å°¸¦ ´­·¶À» ¶§ ½ÇÇà ÇÒ ¸Ş¼Òµå
+			// í‚¤ë¥¼ ëˆŒë €ì„ ë•Œ ì‹¤í–‰ í•  ë©”ì†Œë“œ
 			public void keyPressed(KeyEvent e) {
 				switch(e.getKeyCode()){
 				case KeyEvent.VK_W:
@@ -82,7 +82,7 @@ public class Chu_verup extends JFrame{
 				crashCheck();
 			}
 				
-			// Å°¸¦ ¶ÂÀ» ‹š ½ÇÇàÇÒ ¸Ş¼Òµå
+			// í‚¤ë¥¼ ë—ì„ ë–„ ì‹¤í–‰í•  ë©”ì†Œë“œ
 			public void keyReleased(KeyEvent e) {
 				switch(e.getKeyCode()){
 				case KeyEvent.VK_W:
@@ -105,20 +105,20 @@ public class Chu_verup extends JFrame{
 		init();
 	}
 	
-	// °ÔÀÓ½ÃÀÛÇÒ ¶§ ÃÊ±âÈ­
+	// ê²Œì„ì‹œì‘í•  ë•Œ ì´ˆê¸°í™”
 	public void init() {
 		score = 0;
 		
 		mouseY = (900 - mouseHeight)/2;
 		
-		//( Ã¢ÀÇÅ©±â+1)-ÀÌ¹ÌÁöÀÇ ±æÀÌ
+		//( ì°½ì˜í¬ê¸°+1)-ì´ë¯¸ì§€ì˜ ê¸¸ì´
 		meetX = (int)(Math.random()*(901-mouseWidth-250))+250;
-		meetY = (int)(Math.random()*(651-mouseHeight-190))+190;	// Á¡¼ö ÃÊ±âÈ­, ÇÃ·¹ÀÌ¾î¿Í ÄÚÀÎ À§Ä¡ ¼³Á¤
-									// ÃÖ´ë°ª - ÃÖ¼Ò°ª))+ÃÖ¼Ò°ª
-		System.out.println("°í±â XÁÂÇ¥ : " + meetX + " °í±â YÁÂÇ¥ : " + meetY);
+		meetY = (int)(Math.random()*(651-mouseHeight-190))+190;	// ì ìˆ˜ ì´ˆê¸°í™”, í”Œë ˆì´ì–´ì™€ ì½”ì¸ ìœ„ì¹˜ ì„¤ì •
+									// ìµœëŒ€ê°’ - ìµœì†Œê°’))+ìµœì†Œê°’
+		System.out.println("ê³ ê¸° Xì¢Œí‘œ : " + meetX + " ê³ ê¸° Yì¢Œí‘œ : " + meetY);
 	}
 	
-	// up, down, left, rightÀÇ boolean°ªÀ¸·Î ÇÃ·¹ÀÌ¾î¸¦ ÀÌµ¿½ÃÅ³ ¸Ş¼Òµå
+	// up, down, left, rightì˜ booleanê°’ìœ¼ë¡œ í”Œë ˆì´ì–´ë¥¼ ì´ë™ì‹œí‚¬ ë©”ì†Œë“œ
 	public void keyProcess() {
 		if(up && mouseY - 3 > 180) mouseY -=5;
 		if(down && mouseY + mouseHeight + 3 < 800) mouseY+=5;
@@ -126,7 +126,7 @@ public class Chu_verup extends JFrame{
 		if(right && mouseX + mouseWidth + 3 < 1000) mouseX+=5;
 	}
 	
-	// ÇÃ·¹ÀÌ¾î¿Í ÄÚÀÎÀÌ ´ê¾ÒÀ» ¶§ Á¡¼ö È¹µæ ¸Ş¼Òµå
+	// í”Œë ˆì´ì–´ì™€ ì½”ì¸ì´ ë‹¿ì•˜ì„ ë•Œ ì ìˆ˜ íšë“ ë©”ì†Œë“œ
 	public void crashCheck() {
 		if (mouseX + mouseWidth > meetX+ 70 && 
 				meetX + meetWidth > mouseX+70 && 
@@ -136,17 +136,17 @@ public class Chu_verup extends JFrame{
 			
 			meetX = (int)(Math.random()*(901-mouseWidth-250))+250;
 			meetY = (int)(Math.random()*(651-mouseHeight-190))+190;
-			System.out.println("°í±â XÁÂÇ¥ : " + meetX + " °í±â YÁÂÇ¥ : " + meetY);
+			System.out.println("ê³ ê¸° Xì¢Œí‘œ : " + meetX + " ê³ ê¸° Yì¢Œí‘œ : " + meetY);
 		}
 	}
 	
 
-	// È­¸é ±ôºıÀÓÀ» À§ÇÑ ´õºí ¹öÆÛ¸µ ±â¹ı »ç¿ë
+	// í™”ë©´ ê¹œë¹¡ì„ì„ ìœ„í•œ ë”ë¸” ë²„í¼ë§ ê¸°ë²• ì‚¬ìš©
 	public void paint(Graphics g) {
-		// È­¸é Å©±âÀÇ ¹öÆÛ ÀÌ¹ÌÁö¸¦ »ı¼ºÇÏ°í getGraphics()¸¦ ÅëÇØ ±×·¡ÇÈÀ» ¹Ş¾Æ¿È
+		// í™”ë©´ í¬ê¸°ì˜ ë²„í¼ ì´ë¯¸ì§€ë¥¼ ìƒì„±í•˜ê³  getGraphics()ë¥¼ í†µí•´ ê·¸ë˜í”½ì„ ë°›ì•„ì˜´
 		bufferImage = createImage(1200, 900);
 		screenGraphics = bufferImage.getGraphics();
-		// ´Ù½ÃÇÑ¹ø È£ÃâÇÏ°í ¹öÆÛ ÀÌ¹ÌÁö¸¦ È­¸é¿¡ ±×·ÁÁÖ±â
+		// ë‹¤ì‹œí•œë²ˆ í˜¸ì¶œí•˜ê³  ë²„í¼ ì´ë¯¸ì§€ë¥¼ í™”ë©´ì— ê·¸ë ¤ì£¼ê¸°
 		screenDraw(screenGraphics);
 		g.drawImage(bufferImage, 0,0,null);
 	}
@@ -157,7 +157,7 @@ public class Chu_verup extends JFrame{
 		g.drawImage(backgroundImage, 0, 0, null);
 		g.drawImage(meet, meetX, meetY, null);
 		g.drawImage(mouse, mouseX, mouseY, null);
-		// Á¡¼ö
+		// ì ìˆ˜
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Arial", Font.BOLD, 40));
 		g.drawString("SCORE : " + score, 900, 80);
