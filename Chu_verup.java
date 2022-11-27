@@ -1,4 +1,4 @@
-package main;
+package mypart;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,163 +8,211 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import javax.swing.WindowConstants;
 
 public class Chu_verup extends JFrame{
-	private Image bufferImage;
-	private Graphics screenGraphics;
-	
-	Image backgroundImage = new ImageIcon("src/image/mainScreen.png").getImage();
-	private Image mouse = new ImageIcon("src/image/mouse.png").getImage();
-	private Image meet = new ImageIcon("src/image/meet.png").getImage();
-	
-	// í”Œë ˆì´ì–´ì˜ ì¢Œí‘œ
-	private int mouseX, mouseY;
-	// í”Œë ˆì´ì–´ì™€ ì½”ì¸ì˜ ì¶©ëŒ ì—¬ë¶€ íŒë‹¨ì„ ìœ„í•œ ê° ì´ë¯¸ì§€ì˜ í¬ê¸°
-	private int mouseWidth = mouse.getWidth(null);
-	private int mouseHeight = mouse.getHeight(null);
+   private Image bufferImage;
+   private Graphics screenGraphics;
+   
+   Image backgroundImage = new ImageIcon("src/image/mainScreen.png").getImage();
+   private Image mouse = new ImageIcon("src/image/mouse.png").getImage();
+   private Image meet = new ImageIcon("src/image/meet.png").getImage();
+   private Image burntMeet = new ImageIcon("src/image/burntmeet.png").getImage();
+   
+   // ÀÔÀÇ ÁÂÇ¥
+   private int mouseX = 600;
+   private int mouseY = 450;
+   // ÀÔ°ú °í±âÀÇ Ãæµ¹ ¿©ºÎ ÆÇ´ÜÀ» À§ÇÑ °¢ ÀÌ¹ÌÁöÀÇ Å©±â
+   private int mouseWidth = mouse.getWidth(null);
+   private int mouseHeight = mouse.getHeight(null);
 
-	// ì½”ì¸ ì¢Œí‘œ
-	private int meetX, meetY;
-	// í”Œë ˆì´ì–´ì™€ ì½”ì¸ì˜ ì¶©ëŒ ì—¬ë¶€ íŒë‹¨ì„ ìœ„í•œ ê° ì´ë¯¸ì§€ì˜ í¬ê¸°
-	private int meetWidth = meet.getWidth(null);
-	private int meetHeight = meet.getHeight(null);
-		
-	// ì ìˆ˜
-	private int score;
-	
-	// í‚¤ë³´ë“œì˜ ì›€ì§ì„ì„ ë°›ëŠ” ë³€ìˆ˜
-	private boolean up, down, left, right;
-	
-	Chu_verup() {
-		setTitle("ê²Œì„ í™”ë©´");
-		JPanel panel = new JPanel() {
-			@Override
-			protected void paintComponent(Graphics g) {
-				super.paintComponent(g);
-				screenDraw(g);
-			}
-		};
-		
-		setSize(1200, 900);
-		
-		add(panel);
-		
-		Dimension frameSize = getSize();
+   // °í±â ÁÂÇ¥
+   private int meetX = (int)(Math.random()*(901-mouseWidth-250))+250;
+   private int meetY = (int)(Math.random()*(651-mouseHeight-190))+190;
+   // ÀÔ°ú °í±âÀÇ Ãæµ¹ ¿©ºÎ ÆÇ´ÜÀ» À§ÇÑ °¢ ÀÌ¹ÌÁöÀÇ Å©±â
+   private int meetWidth = meet.getWidth(null);
+   private int meetHeight = meet.getHeight(null);
+   
+   // Åº°í±â ÁÂÇ¥
+   private int burntmeetX = (int)(Math.random()*(901-mouseWidth-250))+250;
+   private int burntmeetY = (int)(Math.random()*(651-mouseWidth-190))+190;
+
+   // ÀÔ°ú Åº°í±âÀÇ Ãæµ¹ ¿©ºÎ ÆÇ´ÜÀ» À§ÇÑ °¢ ÀÌ¹ÌÁöÀÇ Å©±â
+   private int burntmeetWidth = burntMeet.getWidth(null);
+   private int burntmeetHeight = burntMeet.getHeight(null);
+      
+   // Á¡¼ö
+   private int score;
+   
+   // Å°º¸µåÀÇ ¿òÁ÷ÀÓÀ» ¹Ş´Â º¯¼ö
+   private boolean up, down, left, right;
+   
+   private Timer timer;
+   private Timer gameOverTimer;
+   private int time = 30;
+   
+   String nickname;
+   
+   Chu_verup(String nickname) {
+      nickname = this.nickname;
+      
+      setTitle("°ÔÀÓ È­¸é");
+      JPanel panel = new JPanel() {
+         @Override
+         protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            screenDraw(g);
+         }
+      };
+      
+      setSize(1200, 900);
+      
+      add(panel);
+      
+      Dimension frameSize = getSize();
         Dimension windowSize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((windowSize.width - frameSize.width) / 2,
-                (windowSize.height - frameSize.height) / 2); //í™”ë©´ ì¤‘ì•™ì— ë„ìš°ê¸°
+                (windowSize.height - frameSize.height) / 2); //È­¸é Áß¾Ó¿¡ ¶ç¿ì±â
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-		
+      
         addKeyListener(new KeyAdapter() {
-			// í‚¤ë¥¼ ëˆŒë €ì„ ë•Œ ì‹¤í–‰ í•  ë©”ì†Œë“œ
-			public void keyPressed(KeyEvent e) {
-				switch(e.getKeyCode()){
-				case KeyEvent.VK_W:
-					up = true;
-					break;
-				case KeyEvent.VK_S:
-					down = true;
-					break;
-				case KeyEvent.VK_A:
-					left = true;
-					break;
-				case KeyEvent.VK_D:
-					right = true;
-					break;
-				}
-				keyProcess();
-				crashCheck();
-			}
-				
-			// í‚¤ë¥¼ ë—ì„ ë–„ ì‹¤í–‰í•  ë©”ì†Œë“œ
-			public void keyReleased(KeyEvent e) {
-				switch(e.getKeyCode()){
-				case KeyEvent.VK_W:
-					up = false;
-					break;
-				case KeyEvent.VK_S:
-					down = false;
-					break;
-				case KeyEvent.VK_A:
-					left = false;
-					break;
-				case KeyEvent.VK_D:
-					right = false;
-					break;
-				}
-				keyProcess();
-				crashCheck();
-			}
-		});
-		init();
-	}
-	
-	// ê²Œì„ì‹œì‘í•  ë•Œ ì´ˆê¸°í™”
-	public void init() {
-		score = 0;
-		
-		mouseY = (900 - mouseHeight)/2;
-		
-		//( ì°½ì˜í¬ê¸°+1)-ì´ë¯¸ì§€ì˜ ê¸¸ì´
-		meetX = (int)(Math.random()*(901-mouseWidth-250))+250;
-		meetY = (int)(Math.random()*(651-mouseHeight-190))+190;	// ì ìˆ˜ ì´ˆê¸°í™”, í”Œë ˆì´ì–´ì™€ ì½”ì¸ ìœ„ì¹˜ ì„¤ì •
-									// ìµœëŒ€ê°’ - ìµœì†Œê°’))+ìµœì†Œê°’
-		System.out.println("ê³ ê¸° Xì¢Œí‘œ : " + meetX + " ê³ ê¸° Yì¢Œí‘œ : " + meetY);
-	}
-	
-	// up, down, left, rightì˜ booleanê°’ìœ¼ë¡œ í”Œë ˆì´ì–´ë¥¼ ì´ë™ì‹œí‚¬ ë©”ì†Œë“œ
-	public void keyProcess() {
-		if(up && mouseY - 3 > 180) mouseY -=5;
-		if(down && mouseY + mouseHeight + 3 < 800) mouseY+=5;
-		if(left && mouseX -3 > 220) mouseX -=5;
-		if(right && mouseX + mouseWidth + 3 < 1000) mouseX+=5;
-	}
-	
-	// í”Œë ˆì´ì–´ì™€ ì½”ì¸ì´ ë‹¿ì•˜ì„ ë•Œ ì ìˆ˜ íšë“ ë©”ì†Œë“œ
-	public void crashCheck() {
-		if (mouseX + mouseWidth > meetX+ 70 && 
-				meetX + meetWidth > mouseX+70 && 
-				mouseY + mouseHeight > meetY+70 && 
-				meetY + meetHeight > mouseY+70) {
-			score+=100;
-			
-			meetX = (int)(Math.random()*(901-mouseWidth-250))+250;
-			meetY = (int)(Math.random()*(651-mouseHeight-190))+190;
-			System.out.println("ê³ ê¸° Xì¢Œí‘œ : " + meetX + " ê³ ê¸° Yì¢Œí‘œ : " + meetY);
-		}
-	}
-	
+         // Å°¸¦ ´­·¶À» ¶§ ½ÇÇà ÇÒ ¸Ş¼Òµå
+         public void keyPressed(KeyEvent e) {
+            switch(e.getKeyCode()){
+            case KeyEvent.VK_W:
+               up = true;
+               break;
+            case KeyEvent.VK_S:
+               down = true;
+               break;
+            case KeyEvent.VK_A:
+               left = true;
+               break;
+            case KeyEvent.VK_D:
+               right = true;
+               break;
+            }
+         }
+            
+         // Å°¸¦ ¶ÂÀ» ‹š ½ÇÇàÇÒ ¸Ş¼Òµå
+         public void keyReleased(KeyEvent e) {
+            switch(e.getKeyCode()){
+            case KeyEvent.VK_W:
+               up = false;
+               break;
+            case KeyEvent.VK_S:
+               down = false;
+               break;
+            case KeyEvent.VK_A:
+               left = false;
+               break;
+            case KeyEvent.VK_D:
+               right = false;
+               break;
+            }
+         }
+      });
+      
+      
+      timer = new Timer(10, (e) -> {
+         keyProcess();
+      });
+      
+      gameOverTimer = new Timer(1000, (e) -> {
+         if(time == 0) {
+            new Start();
+            setVisible(false);
+         }
+         time--;
+      });
+      
+      gameOverTimer.start();
+      timer.start();
+   }
+   
+   // °ÔÀÓ½ÃÀÛÇÒ ¶§ ÃÊ±âÈ­
+   public void init() {
+      score = 0;
+      
+      mouseY = (900 - mouseHeight)/2;
+      
+      //( Ã¢ÀÇÅ©±â+1)-ÀÌ¹ÌÁöÀÇ ±æÀÌ
+      meetX = (int)(Math.random()*(901-mouseWidth-250))+250;
+      meetY = (int)(Math.random()*(651-mouseHeight-190))+190;   // Á¡¼ö ÃÊ±âÈ­, ÇÃ·¹ÀÌ¾î¿Í ÄÚÀÎ À§Ä¡ ¼³Á¤
+                           // ÃÖ´ë°ª - ÃÖ¼Ò°ª))+ÃÖ¼Ò°ª
+      System.out.println("°í±â XÁÂÇ¥ : " + meetX + " °í±â YÁÂÇ¥ : " + meetY);
+   }
+   
+   // up, down, left, rightÀÇ boolean°ªÀ¸·Î ÇÃ·¹ÀÌ¾î¸¦ ÀÌµ¿½ÃÅ³ ¸Ş¼Òµå
+   public void keyProcess() {
+      if(up && mouseY - 3 > 180) mouseY -=5;
+      if(down && mouseY + mouseHeight + 3 < 800) mouseY+=5;
+      if(left && mouseX -3 > 220) mouseX -=5;
+      if(right && mouseX + mouseWidth + 3 < 1000) mouseX+=5;
+      
+      crashCheck();
+   }
+   
+   // ÇÃ·¹ÀÌ¾î¿Í ÄÚÀÎÀÌ ´ê¾ÒÀ» ¶§ Á¡¼ö È¹µæ ¸Ş¼Òµå
+   public void crashCheck() {
+      if (mouseX + mouseWidth > meetX+ 70 && 
+            meetX + meetWidth > mouseX+70 && 
+            mouseY + mouseHeight > meetY+70 && 
+            meetY + meetHeight > mouseY+70) {
+         score+=100;
+         
+         meetX = (int)(Math.random()*(901-mouseWidth-250))+250;
+         meetY = (int)(Math.random()*(651-mouseHeight-190))+190;
+         System.out.println("°í±â XÁÂÇ¥ : " + meetX + " °í±â YÁÂÇ¥ : " + meetY);
+      }
+      
+      if (mouseX + mouseWidth > burntmeetX+ 70 && 
+            burntmeetX + meetWidth > mouseX+70 && 
+            mouseY + mouseHeight > burntmeetY+70 && 
+            burntmeetY + meetHeight > mouseY+70) {
+         score-=30;
+         
+         burntmeetX = (int)(Math.random()*(901-mouseWidth-250))+250;
+         burntmeetY = (int)(Math.random()*(651-mouseHeight-190))+190;
+      }
+   }
+   
 
-	// í™”ë©´ ê¹œë¹¡ì„ì„ ìœ„í•œ ë”ë¸” ë²„í¼ë§ ê¸°ë²• ì‚¬ìš©
-	public void paint(Graphics g) {
-		// í™”ë©´ í¬ê¸°ì˜ ë²„í¼ ì´ë¯¸ì§€ë¥¼ ìƒì„±í•˜ê³  getGraphics()ë¥¼ í†µí•´ ê·¸ë˜í”½ì„ ë°›ì•„ì˜´
-		bufferImage = createImage(1200, 900);
-		screenGraphics = bufferImage.getGraphics();
-		// ë‹¤ì‹œí•œë²ˆ í˜¸ì¶œí•˜ê³  ë²„í¼ ì´ë¯¸ì§€ë¥¼ í™”ë©´ì— ê·¸ë ¤ì£¼ê¸°
-		screenDraw(screenGraphics);
-		g.drawImage(bufferImage, 0,0,null);
-	}
-	
-	
-	
-	public void screenDraw(Graphics g) {
-		g.drawImage(backgroundImage, 0, 0, null);
-		g.drawImage(meet, meetX, meetY, null);
-		g.drawImage(mouse, mouseX, mouseY, null);
-		// ì ìˆ˜
-		g.setColor(Color.WHITE);
-		g.setFont(new Font("Arial", Font.BOLD, 40));
-		g.drawString("SCORE : " + score, 900, 80);
-		repaint();
-	}
-	public static void main(String[] args) {
-		new Chu_verup();
-	}
+   // È­¸é ±ôºıÀÓÀ» À§ÇÑ ´õºí ¹öÆÛ¸µ ±â¹ı »ç¿ë
+   public void paint(Graphics g) {
+      // È­¸é Å©±âÀÇ ¹öÆÛ ÀÌ¹ÌÁö¸¦ »ı¼ºÇÏ°í getGraphics()¸¦ ÅëÇØ ±×·¡ÇÈÀ» ¹Ş¾Æ¿È
+      bufferImage = createImage(1200, 900);
+      screenGraphics = bufferImage.getGraphics();
+      // ´Ù½ÃÇÑ¹ø È£ÃâÇÏ°í ¹öÆÛ ÀÌ¹ÌÁö¸¦ È­¸é¿¡ ±×·ÁÁÖ±â
+      screenDraw(screenGraphics);
+      g.drawImage(bufferImage, 0,0,null);
+   }
+   
+   
+   
+   public void screenDraw(Graphics g) {
+      g.drawImage(backgroundImage, 0, 0, null);
+      g.drawImage(meet, meetX, meetY, null);
+      g.drawImage(burntMeet, burntmeetX, burntmeetY, null);
+      g.drawImage(mouse, mouseX, mouseY, null);
+      // Á¡¼ö
+      g.setColor(Color.WHITE);
+      g.setFont(new Font("Arial", Font.BOLD, 40));
+      g.drawString("SCORE : " + score, 900, 80);
+      g.drawString("TIMER : " + time, 100, 80);
+      g.drawString("TIMER : " + time, 100, 80);
+      g.drawString("NAME : " + nickname, 400, 80);
+      repaint();
+   }
+   public static void main(String[] args) {
+      
+   }
 
 }
