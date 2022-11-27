@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.event.*;
 
@@ -40,12 +41,16 @@ import javax.swing.event.*;
            this.setSize(1200,900);
            this.setVisible(true);
          
-	    	
-	    	 bt.setContentAreaFilled(false);
-	    	 bt.setFocusPainted(false);
-	    	// bt.setBorderPainted(false);
+	    
 
-		
+	    bt = new JButton(new ImageIcon("BtnImage/Btn_Play.png"));
+	    
+	    panel.add(bt);
+	    	 
+	    bt.setContentAreaFilled(false);
+   	    bt.setFocusPainted(false);
+   	    // bt.setBorderPainted(false);
+   	 
 	    	 setVisible(true);
       
         
